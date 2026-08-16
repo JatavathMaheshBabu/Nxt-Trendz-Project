@@ -1,7 +1,5 @@
 import {Navigate, Route, Routes} from 'react-router-dom'
 
-import ProtectedRoute from './components/ProtectedRoute/index.jsx'
-
 import Login from './pages/Login/index.jsx'
 import Products from './pages/Products/index.jsx'
 import ProductDetails from './pages/ProductDetails/index.jsx'
@@ -11,26 +9,28 @@ const App = () => {
   return (
     <Routes>
       <Route
+        path="/"
+        element={
+          <Navigate
+            to="/products"
+            replace
+          />
+        }
+      />
+
+      <Route
         path="/login"
         element={<Login />}
       />
 
       <Route
         path="/products"
-        element={
-          <ProtectedRoute>
-            <Products />
-          </ProtectedRoute>
-        }
+        element={<Products />}
       />
 
       <Route
         path="/products/:id"
-        element={
-          <ProtectedRoute>
-            <ProductDetails />
-          </ProtectedRoute>
-        }
+        element={<ProductDetails />}
       />
 
       <Route
@@ -39,20 +39,10 @@ const App = () => {
       />
 
       <Route
-        path="/"
-        element={
-          <Navigate
-            to="/login"
-            replace
-          />
-        }
-      />
-
-      <Route
         path="*"
         element={
           <Navigate
-            to="/not-found"
+            to="/products"
             replace
           />
         }
