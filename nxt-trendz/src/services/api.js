@@ -1,36 +1,29 @@
-import { getToken } from './auth'
+import {getToken} from './auth'
 
 const API_BASE_URL = 'https://apis.ccbp.in'
 
-const request = async (
-  endpoint,
-  options = {},
-) => {
+const request = async (endpoint, options = {}) => {
   const token = getToken()
 
-  const response = await fetch(
-    `${API_BASE_URL}${endpoint}`,
-    {
-      ...options,
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    ...options,
 
-      headers: {
-        'Content-Type': 'application/json',
+    headers: {
+      'Content-Type': 'application/json',
 
-        ...(token && {
-          Authorization: `Bearer ${token}`,
-        }),
+      ...(token && {
+        Authorization: `Bearer ${token}`,
+      }),
 
-        ...options.headers,
-      },
+      ...options.headers,
     },
-  )
+  })
 
   const data = await response.json()
 
   if (!response.ok) {
     throw new Error(
-      data.error_msg ||
-        'Something went wrong',
+      data.error_msg || 'Something went wrong',
     )
   }
 
@@ -62,9 +55,7 @@ export const fetchProducts = ({
     params.set('rating', rating)
   }
 
-  return request(
-    `/products?${params.toString()}`,
-  )
+  return request(`/products?${params.toString()}`)
 }
 
 export const fetchProductDetails = id =>
